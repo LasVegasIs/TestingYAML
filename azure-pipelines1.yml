@@ -9,8 +9,8 @@ resources:
   repositories:
     - repository: ci
       type: github
-      name: crey-games/backend-ci
-      endpoint: crey-games
+      name: LasVegasIs/TestingYAML
+      endpoint: LasVegasIs
       ref: refs/heads/master
 
 variables:  
