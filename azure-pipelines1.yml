@@ -1,0 +1,95 @@
+trigger:
+  - master
+pr:
+  - master
+  
+name: $(Date:yyyyMMdd)_$(Build.Reason).$(Rev:r)    
+
+resources:
+  repositories:
+    - repository: ci
+      type: github
+      name: crey-games/backend-ci
+      endpoint: crey-games
+      ref: refs/heads/master
+
+variables:  
+  buildConfiguration: 'Release'
+  serviceFolder: 'IAM'
+  applicationName: 'iam'
+  projectFile: 'IAM.csproj'
+
+stages:
+  - stage: BuildStage
+    pool:
+      vmImage: 'windows-2019'
+    jobs:
+      - job: DevBuild
+        steps:
+        - checkout: self
+          submodules: recursive
+          persistCredentials: true
+
+        - powershell: |
+            $SettingsPath=".\$(serviceFolder)\appsettings.json"
+            $Settings=(Get-Content -Raw -Path $SettingsPath | ConvertFrom-Json)
+            $Settings.PSObject.Properties.Remove('DeploymentSlot')
+            $Settings.PSObject.Properties.Remove('Stage')
+            $Settings.Changeset="$(Build.SourceVersion)"
+            Write-Host 'Changeset: $(Build.SourceVersion)'
+            ConvertTo-Json $Settings | Set-Content -path $SettingsPath
+          displayName: Update configuration
+        - task: DotNetCoreCLI@2
+          displayName: 'Restore NuGet packages'
+          inputs:
+            command: restore
+            projects: '**/*.csproj'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Build Service ($(buildConfiguration))'
+          inputs:
+            command: build
+            projects: '**/$(serviceFolder)/$(projectFile)'
+            arguments: '--configuration $(buildConfiguration)'
+
+        - task: DotNetCoreCLI@2
+          displayName: 'Creating web app publish package'
+          inputs:
+            command: publish
+            publishWebProjects: true
+            arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+            zipAfterPublish: true
+
+        - powershell: |
+            Rename-Item $(Build.ArtifactStagingDirectory)\$(serviceFolder).zip $(Build.ArtifactStagingDirectory)\WebApp.zip
+          displayName: Collecting artifacts
+        - task: PublishPipelineArtifact@1
+          condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+          displayName: 'Upload artifact to file container'
+          inputs:
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifact: 'drop'
+            publishLocation: 'pipeline'
+
+  - stage: DockerStage
+    dependsOn: BuildStage
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+    - template: docker_build_webapp.yml@ci
+      parameters:
+        applicationName: '$(applicationName)'
+        ciRepositoryName: ci
+        startupName: 'IAM'
+        dockerfiles: 'docker_aspnet_3'
+
+  - stage: DevStage
+    dependsOn:
+      - BuildStage
+      - DockerStage
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+    - template: deploy_webapp.yml@ci
+      parameters:
+        stage: dev
+        applicationName: '$(applicationName)'
+        ciRepositoryName: ci
