@@ -1,0 +1,6 @@
+[submodule "Core"]
+	path = Core
+	url = https://github.com/crey-games/backend-core.git
+[submodule "MessageContracts"]
+	path = MessageContracts
+	url = https://github.com/crey-games/backend-message-contracts.git

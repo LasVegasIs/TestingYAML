@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MockServer": {
+      "commandName": "Project",
+      "commandLineArgs": "gameevents All"
+    }
+  }
+}

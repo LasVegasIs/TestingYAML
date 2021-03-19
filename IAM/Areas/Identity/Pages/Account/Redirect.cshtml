@@ -1,0 +1,40 @@
+﻿@page
+@model RedirectModel
+@{
+    ViewData["Title"] = "Redirect";
+    string mobileMode = ViewContext.HttpContext.Request.Query["mobile"];
+    bool isMobileModeOn = mobileMode == "true";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    <p>Redirecting you to @Model.RedirectUrl</p>
+
+    <form id="redirect" method="post" asp-route-mobile="@Model.MobileMode">
+        <input type="hidden" name="redirectUrl" value="@Model.RedirectUrl" />
+    </form>
+</header>
+
+@section Scripts {
+    @if (isMobileModeOn)
+    {
+        <script>
+            try {
+                const iEvent = JSON.stringify({ 
+                    event: "metricEvent", 
+                    params: [
+                        { metricEventName: "Perf_AppUIShowUp_Start" },
+                        { metricEventParams: null },
+                    ]
+                });
+                
+                window.crey && window.crey.sendEventToAppUI && window.crey.sendEventToAppUI(iEvent);
+            } catch(e) {
+                console.log(e)
+            }
+        </script>
+    }
+    <script>
+        document.getElementById("redirect").submit();
+    </script>
+}

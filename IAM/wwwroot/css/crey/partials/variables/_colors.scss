@@ -1,0 +1,82 @@
+//// FUNCTIONS
+@function dark($color) {
+    @return adjust-color($color, $saturation: -12%, $lightness: -6%);
+}
+
+@function light($color) {
+    @return lighten($color, 6%);
+}
+
+@function click($color) {
+    @return dark($color);
+}
+
+@function hover($color) {
+    @return light($color);
+}
+
+@function focus($color) {
+    @return lighten($color, 12%);
+}
+
+//// COLORS
+$black: #000;
+$black-60: rgba(0, 0, 0, 0.6);
+$white: #fff;
+$dark-grey: #333333;
+$medium-grey: #808080;
+$light-grey: #dcdcdc;
+$ultra-light-grey: #f0f0f0;
+
+$coral: #ff5351;
+$coral-dark: #b53b46;
+$coral-extra-dark: #6e1b36;
+
+$violet: #7820cc;
+$violet-dark: #5b00a0;
+$violet-extra-dark: #32006e;
+$violet-text: #af73e9;
+
+$danger-red: #f23939;
+$success-green: #049556;
+$warning-yellow: #e5a11a;
+
+$yellow: #ffeb51;
+
+// DARK GREYISH
+$dark-1: #4d4c5d;
+$dark-2: #3a3946;
+$dark-3: #2a2933;
+$dark-4: #1e1e24;
+$dark-5: #131217;
+$dark-6: #070708;
+
+// LIGHT GREYISH
+$light-1: #646378;
+$light-2: #7d7b93;
+$light-3: #9997aa;
+$light-4: #b4b3c1;
+$light-5: #d0cfd8;
+$light-6: #ecebef;
+
+// TODO - Remove these colors
+$turquoise: #00adc2;
+$turquoise-dark: dark($turquoise);
+$turquoise-light: light($turquoise);
+$coralHover: $coral-dark;
+$green: $turquoise;
+$greenHover: $turquoise-dark;
+$green-button: $turquoise;
+
+//// COLORS BY USE
+$main-bg-color: #ffffff;
+$main-bg-color-dark: #27263a;
+$text-color: $dark-2;
+$hover-background-color: $coral;
+$hover-text-color: #ffffff;
+
+//// VENDOR COLORS
+$facebook-blue: #3b5998;
+$twitter-blue: #00aced;
+$twitch-purple: #6441a4;
+$discord-blue: #7289da;

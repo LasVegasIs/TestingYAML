@@ -1,0 +1,17 @@
+[*.cs]
+end_of_line = crlf
+csharp_new_line_before_open_brace = all
+
+dotnet_naming_symbols.private_fields.applicable_kinds           = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.private_field_style.required_prefix = _
+
+dotnet_naming_rule.private_field_must.symbols  = private_fields
+dotnet_naming_rule.private_field_must.style    = private_field_style
+dotnet_naming_rule.private_field_must.severity = error
+
+dotnet_diagnostic.CS1591.severity = none
+
+# nullables as errors
+dotnet_diagnostic.CS8603.severity = error

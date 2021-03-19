@@ -1,0 +1,118 @@
+﻿@using Microsoft.Extensions.Configuration;
+@using Microsoft.AspNetCore.Http
+@using Crey.Configuration.ConfigurationExtensions;
+@using Crey.Kernel.ServiceDiscovery;
+@using IAM.Areas.Authentication;
+@inject IConfiguration Configuration;
+@inject SignInManager<ApplicationUser> SignInManager;
+@inject UserManager<ApplicationUser> UserManager;
+@inject ICreyService<AccountRepository> AccountRepository;
+@{
+    var isOnCancelPage = Context.Request.Path.StartsWithSegments("/Identity/Account/CancelPersonalDataDeletion");
+    var user = await UserManager.GetUserAsync(User);
+    if (!isOnCancelPage && user != null && await AccountRepository.Value.IsUserSoftDeletedAsync(user.AccountId))
+    {
+        var cancelPageUrl = Url.Page(
+            "/Account/CancelPersonalDataDeletion",
+            pageHandler: null,
+            values: new { area = "Identity" },
+            protocol: Context.Request.Scheme);
+        Context.Response.Redirect(cancelPageUrl);
+    }
+
+    var url = $"{Configuration.GetWebsiteBaseURI()}";
+    if (SignInManager.IsSignedIn(User))
+    {
+        url += "/my";
+    }
+
+    var assetUrl = $"{Configuration.GetWebsiteBaseURI()}" + "/static";
+    var faviconUrl = assetUrl + "/favicon.ico";
+    var bodyClass = "";
+    var logoUrl = assetUrl + "/assets/svg/crey-logo-white.svg";
+    var theme = "dark";
+    if (Context.Session.GetString("theme") != null)
+    {
+        theme = Context.Session.GetString("theme");
+        bodyClass += " theme-" + theme;
+        logoUrl = assetUrl + "/assets/svg/logo/crey-logo-red.svg";
+    }
+    string mobileMode = ViewContext.HttpContext.Request.Query["mobile"];
+    bool isMobileModeOn = mobileMode == "true";
+    if (isMobileModeOn)
+    {
+        bodyClass += " mobile";
+    }
+
+    bool includeRobots()
+    {
+        string slot = Configuration.GetDeploymentSlot().ToString().ToLower();
+        string page = ViewContext.RouteData.Values["page"].ToString();
+
+        return !slot.Contains("live", StringComparison.CurrentCultureIgnoreCase)
+            || (!page.Contains("terms", StringComparison.CurrentCultureIgnoreCase) && !page.Contains("privacy", StringComparison.CurrentCultureIgnoreCase));
+
+    }
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if (includeRobots())
+    {
+        <meta name="robots" content="noindex" />
+    }
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] - IAM</title>
+    <link rel="stylesheet" href="~/css/bootstrap.custom.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
+    <link rel="shortcut icon" href="@faviconUrl">
+</head>
+<body class="@bodyClass">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-@theme">
+
+            <a class="navbar-brand" asp-area="Identity" asp-page="/Account/Redirect" asp-route-redirectUrl="@url">
+                <img src="@logoUrl" alt="CREY" class="header-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial" />
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link back-to-playcrey" asp-area="Identity" asp-page="/Account/Redirect" asp-route-redirectUrl="@url">Back</a>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - IAM - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (isMobileModeOn)
+    {
+        <script src="~/js/deviceBackHandler.js"></script>
+        <script src="~/js/scrollHandler.js"></script>
+    }
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

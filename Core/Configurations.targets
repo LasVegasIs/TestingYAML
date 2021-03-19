@@ -1,0 +1,31 @@
+<Project>
+  
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <!--<DefineConstants>$(DefineConstants);TCPVERBOSE</DefineConstants>-->
+  </PropertyGroup>
+  
+  
+  <PropertyGroup>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+    <RetainVMGarbageCollection>true</RetainVMGarbageCollection>
+    <ThreadPoolMinThreads>4</ThreadPoolMinThreads>
+    <ThreadPoolMaxThreads>64</ThreadPoolMaxThreads>
+  </PropertyGroup>
+ </Project>

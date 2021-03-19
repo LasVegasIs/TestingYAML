@@ -1,0 +1,18 @@
+@import "../variables/index.scss";
+
+@mixin header-base {
+    font-family: $font-family-barlow;
+    font-style: normal;
+    color: $text-color;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+@mixin body-base {
+    font-family: $font-family-noto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: $font-size-default;
+    line-height: 150%;
+    color: $text-color;
+}

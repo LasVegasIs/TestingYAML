@@ -1,0 +1,11 @@
+﻿@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h4>Associate your @Model.LoginProvider account.</h4>
+<hr />
+
+<div class="text-danger error">@Model.ErrorMessage</div>

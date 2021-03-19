@@ -1,0 +1,100 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Sign in";
+    bool isMobileModeOn = Model.MobileMode == "true";
+}
+
+<div class="login-form">
+    <h1>@ViewData["Title"]</h1>
+    @if (!isMobileModeOn)
+    {
+        <section>
+            <div class="label">Sign in with</div>
+            @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            {
+                <div>
+                    Social logins are unavailable at this moment
+                </div>
+            }
+            else
+            {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div class="row">
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <div class="col">
+                                <button type="submit" class="btn btn-@provider.Name.ToLower()" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                            </div>
+                        }
+                    </div>
+                </form>
+            }
+        </section>
+        <div class="auth-separator">or</div>
+    }
+    <section>
+        <form id="account" method="post" asp-route-returnUrl="@Model.ReturnUrl" asp-route-mobile="@Model.MobileMode">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.EmailOrUserName"></label>
+                <input asp-for="Input.EmailOrUserName" class="form-control" />
+                <span asp-validation-for="Input.EmailOrUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-coral">Sign in</button>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    @if (string.IsNullOrEmpty(Model.RegistrationPageReturnUrl))
+                    {
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" asp-route-mobile="@Model.MobileMode">Register as a new user</a>
+                    }
+                    else
+                    {
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" asp-route-registrationPageReturnUrl="@Model.RegistrationPageReturnUrl" asp-route-mobile="@Model.MobileMode">Register as a new user</a>
+                    }
+                </div>
+                <div class="col-6 text-right">
+                    <a id="forgot-password" asp-page="./ForgotPassword"  asp-route-mobile="@Model.MobileMode">Forgot your password?</a>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @if (isMobileModeOn)
+    {
+        <script>
+            try {
+                const iEvent = JSON.stringify({ 
+                    event: "metricEvent", 
+                    params: [
+                        { metricEventName: "Perf_SignInUIShowUp_End" },
+                        { metricEventParams: null }
+                    ]
+                });
+                
+                window.crey && window.crey.sendEventToAppUI && window.crey.sendEventToAppUI(iEvent);
+            } catch(e) {
+                console.log(e)
+            }
+        </script>
+    }
+}

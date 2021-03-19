@@ -1,0 +1,45 @@
+@mixin background-style($wht-alpha, $bg) {
+    background: linear-gradient(rgba(255, 255, 255, $wht-alpha), rgba(255, 255, 255, $wht-alpha)), linear-gradient($bg, $bg);
+}
+
+@mixin lighten-background($bg, $dp: 3) {
+    @if $dp==0 {
+        background: $bg;
+    } @else if $dp==1 {
+        @include background-style(0.05, $bg);
+    } @else if $dp==2 {
+        @include background-style(0.07, $bg);
+    } @else if $dp==3 {
+        @include background-style(0.08, $bg);
+    } @else if $dp==4 {
+        @include background-style(0.09, $bg);
+    } @else if $dp==6 {
+        @include background-style(0.11, $bg);
+    } @else if $dp==8 {
+        @include background-style(0.12, $bg);
+    } @else if $dp==9 {
+        @include background-style(0.13, $bg);
+    } @else if $dp==12 {
+        @include background-style(0.14, $bg);
+    } @else if $dp==16 {
+        @include background-style(0.15, $bg);
+    } @else if $dp==24 {
+        @include background-style(0.16, $bg);
+    } @else {
+        @error "Invalid argument for $dp: {" + $dp + "}, look at the method definition for possible values";
+    }
+}
+
+@mixin background-transistion {
+    transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@mixin card-background($bg) {
+    @include lighten-background($bg, 0);
+    &:hover {
+        @include lighten-background($bg, 3);
+    }
+    &:active {
+        @include lighten-background($bg, 1);
+    }
+}

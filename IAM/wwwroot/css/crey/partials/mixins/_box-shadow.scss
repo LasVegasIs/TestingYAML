@@ -1,0 +1,63 @@
+@mixin box-shadow($dp: 3) {
+    @if $dp==0 {
+        box-shadow: none;
+    } @else if $dp==1 {
+        box-shadow: 0 1px 1px 0 rgba($dark-2, 0.14), 0 2px 1px -1px rgba($dark-2, 0.12), 0 1px 3px 0 rgba($dark-2, 0.2);
+    } @else if $dp==2 {
+        box-shadow: 0 2px 2px 0 rgba($dark-1, 0.14), 0 3px 1px -2px rgba($dark-1, 0.12), 0 1px 5px 0 rgba($dark-1, 0.2);
+    } @else if $dp==3 {
+        box-shadow: 0 3px 4px 0 rgba($dark-1, 0.14), 0 3px 3px -2px rgba($dark-1, 0.12), 0 1px 8px 0 rgba($dark-1, 0.2);
+    } @else if $dp==4 {
+        box-shadow: 0 4px 5px 0 rgba($light-1, 0.14), 0 1px 10px 0 rgba($light-1, 0.12), 0 2px 4px -1px rgba($light-1, 0.2);
+    } @else if $dp==6 {
+        box-shadow: 0 6px 10px 0 rgba($light-1, 0.14), 0 1px 18px 0 rgba($light-1, 0.12), 0 3px 5px -1px rgba($light-1, 0.2);
+    } @else if $dp==8 {
+        box-shadow: 0 8px 10px 1px rgba($light-2, 0.14), 0 3px 14px 2px rgba($light-2, 0.12), 0 5px 5px -3px rgba($light-2, 0.2);
+    } @else if $dp==9 {
+        box-shadow: 0 9px 12px 1px rgba($light-3, 0.14), 0 3px 16px 2px rgba($light-3, 0.12), 0 5px 6px -3px rgba($light-3, 0.2);
+    } @else if $dp==12 {
+        box-shadow: 0 12px 17px 2px rgba($light-4, 0.14), 0 5px 22px 4px rgba($light-4, 0.12), 0 7px 8px -4px rgba($light-4, 0.2);
+    } @else if $dp==16 {
+        box-shadow: 0 16px 24px 2px rgba($light-5, 0.14), 0 6px 30px 5px rgba($light-5, 0.12), 0 8px 10px -5px rgba($light-5, 0.2);
+    } @else if $dp==24 {
+        box-shadow: 0 24px 38px 3px rgba($light-6, 0.14), 0 9px 46px 8px rgba($light-6, 0.12), 0 11px 15px -7px rgba($light-6, 0.2);
+    } @else {
+        @error "Invalid argument for $dp: {" + $dp + "}, look at the method definition for possible values";
+    }
+}
+
+@mixin shadow-transistion {
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@mixin shadow-disabled {
+    @include box-shadow(0);
+    &:hover {
+        @include box-shadow(0);
+    }
+    &:active {
+        @include box-shadow(0);
+    }
+}
+
+@mixin shadow-card {
+    @include box-shadow(3);
+    @include shadow-transistion();
+    &:hover {
+        @include box-shadow(6);
+    }
+    &:active {
+        @include box-shadow(1);
+    }
+}
+
+@mixin shadow-button {
+    @include box-shadow(1);
+    @include shadow-transistion();
+    &:hover {
+        @include box-shadow(2);
+    }
+    &:active {
+        @include box-shadow(0);
+    }
+}

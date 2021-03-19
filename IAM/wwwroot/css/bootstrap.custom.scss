@@ -1,0 +1,579 @@
+﻿@import "../lib/bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+@import "crey/partials/variables/_colors.scss";
+@import "crey/partials/variables/_typography.scss";
+
+body {
+    background: $dark-3;
+    color: $white;
+    font-size: 16px;
+    font-family: $font-family-noto;
+}
+
+nav.navbar {
+    background: $dark-4;
+    padding: 10px 15px;
+    height: 64px;
+    margin-bottom: 56px;
+}
+
+.navbar-collapse {
+    padding: 10px;
+    z-index: 10;
+    background-color: $dark-4;
+}
+
+.navbar-toggler{
+    margin-bottom: 5px;
+}
+
+a {
+    color: $light-5;
+    font-weight: normal;
+    line-height: 160%;
+    text-decoration: underline !important;
+
+    &:hover {
+        color: hover($light-5);
+    }
+}
+
+nav .nav-link {
+    color: $light-5;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 160%;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+        color: hover($light-5);
+    }
+}
+
+.login-nav a {
+    text-decoration: none !important;
+}
+
+.header-logo {
+    height: 24px;
+    display: block;
+    margin-right: 25px;
+}
+
+h1 {
+    font-family: $font-family-barlow;
+    font-size: $h1-font-size;
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+h3, .headline-3 {
+    font-family: $font-family-barlow;
+    font-size: $h3-font-size;
+    font-weight: bold;
+}
+
+h4 {
+    font-weight: bold;
+    font-size: $h4-font-size;
+    line-height: 110%;
+    /* identical to box height, or 40px */
+    letter-spacing: 0.0025em;
+}
+
+h5 {
+    font-family: $font-family-barlow;
+    font-style: normal;
+    font-weight: bold;
+    font-size: $h5-font-size;
+    line-height: 120%;
+}
+
+h1 + .description{
+    margin-top: -30px;
+}
+
+.description{
+    margin-bottom: 10px;
+}
+
+.description-list{
+    margin-bottom: 30px;
+}
+
+.register-form, .login-form, .forget-pass-form, .reset-pass-form {
+    max-width: 425px;
+    margin: 0 auto;
+}
+
+.btn {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 100%;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: $white !important;
+    background-color: $light-1;
+    box-shadow: 5px 5px 10px rgba(5, 6, 10, 0.3);
+    padding: 10px;
+    height: 48px;
+    width: 100%;
+    border: none;
+    text-decoration: none !important;
+
+    &:hover {
+        background-color: hover($light-1);
+    }
+
+    &:focus, &:active {
+        outline: none !important;
+        box-shadow: none;
+    }
+
+    &.btn-facebook {
+        background-color: $facebook-blue !important;
+
+        &:hover {
+            background-color: hover($facebook-blue) !important;
+        }
+    }
+
+    &.btn-google {
+        background-color: #DB4437 !important;
+
+        &:hover {
+            background-color: hover(#DB4437) !important;
+        }
+    }
+
+    &.btn-coral {
+        background-color: $coral;
+        width: auto;
+        height: auto;
+
+        &:hover {
+            background-color: hover($coral);
+        }
+    }
+
+    &.btn-violet {
+        background-color: $violet;
+
+        &:hover {
+            background-color: hover($violet);
+        }
+    }
+}
+
+#enable-authenticator {
+    display: inline-flex;
+    justify-content: center;
+    max-width: 500px;
+}
+
+#socialLoginList {
+    max-width: 500px;
+
+    button + button {
+        margin-top: 15px;
+    }
+}
+
+.alert.dismissible > button {
+    display: none !important;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-control {
+    background: $dark-2;
+    border: 1px solid $light-1;
+    box-sizing: border-box;
+    box-shadow: inset 2px 2px 10px rgba(5, 6, 10, 0.3);
+    border-radius: 2px;
+    color: $white;
+    padding: 10px 20px;
+    height: 40px;
+
+    &:focus {
+        color: $white;
+        background: $dark-2;
+        border-color: $light-4;
+    }
+
+    &:focus, &:active {
+        outline: none !important;
+        box-shadow: none;
+    }
+
+    &.input-validation-error {
+        border-color: #FF5351;
+    }
+}
+
+.select-container .form-control {
+    padding: 10px 15px;
+}
+
+#Input_Day{
+    border-right: none;
+}
+
+#Input_Year{
+    border-left: none;
+}
+
+.input-group-text {
+    background: $dark-2;
+    border: 1px solid $light-1;
+    box-sizing: border-box;
+    border-radius: 2px;
+    color: $white;
+    cursor: pointer;
+    min-width: 50px;
+    text-align: center;
+    display: inline-block;
+
+    &:hover {
+        background: hover($dark-2);
+    }
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background: $dark-1;
+    border: 1px solid $light-1;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background: $dark-2;
+    border: 1px solid $light-1;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: $light-1;
+}
+
+.nav-pills .nav-link {
+    text-decoration: none !important;
+}
+
+table td {
+    color: $white;
+}
+
+#account .btn{
+    width: 100%;
+}
+
+.text-danger {
+    color: #F45959 !important;
+    letter-spacing: 0.1em;
+    margin-left: auto;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 160%;
+}
+
+span.text-danger {
+    float: right;
+    margin-top: 5px;
+    max-width: 70%;
+    text-align: right;
+    line-height: 110%;
+
+    &:after {
+        float: none;
+        clear: both;
+    }
+}
+
+.label-group{
+    margin-bottom: 15px;
+}
+
+.hint {
+    color: $light-6;
+    font-size: 11px;
+    display: block;
+    margin-top: 5px;
+    text-align: right;
+}
+
+
+::-webkit-input-placeholder {
+    color: $light-5;
+}
+
+:-ms-input-placeholder {
+    color: $light-5;
+}
+
+:placeholder-shown {
+    color: $light-5;
+}
+
+.label, label {
+    margin-bottom: 0.5rem;
+    font-size: 14px;
+}
+
+.form-check-label {
+    a {
+        color: inherit;
+
+        &:hover {
+            text-decoration: none !important;
+        }
+    }
+}
+
+.auth-separator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0;
+    font-size: 14px;
+    color: gray;
+    font-weight: bold;
+    line-height: 160%;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: $white;
+
+    &:before {
+        content: "";
+        flex: 1;
+        border-top: 1px solid $light-1;
+        margin-right: 10px;
+    }
+
+    &:after {
+        content: "";
+        flex: 1;
+        border-top: 1px solid $light-1;
+        margin-left: 10px;
+    }
+}
+
+.video-container {
+    box-shadow: 5px 5px 10px rgba(5, 6, 10, 0.3);
+}
+
+.avatar-image {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.notification-info-box {
+    display: flex;
+    background: rgb(227, 63, 61);
+    background: linear-gradient(90deg, rgba(227, 63, 61, 1) 0%, rgba(255, 102, 101, 1) 100%);
+    color: #fff;
+    margin-bottom: 10px;
+    align-items: center;
+
+    .referral-image {
+        width: 40%;
+        padding: 10px;
+        min-width: 100px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    .referral-box-text {
+        padding: 10px;
+        font-size: 14px;
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.xp-icon {
+    color: rgb(4, 149, 86);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.coin-container {
+    margin: 25px 0;
+
+    i {
+        color: #F2CC0D;
+        font-size: 48px;
+        margin-right: 10px;
+    }
+}
+
+.referral-container {
+    margin-top: 100px;
+
+    h5{
+        margin: 15px 0;
+    }
+}
+
+footer {
+    display: none;
+}
+
+/* RESPONSIVE */
+@media (min-width: 1920px) {
+    nav.navbar {
+        margin-bottom: 80px;
+    }
+}
+
+@media (min-width: 1440px) {
+    nav.navbar {
+        height: 80px;
+        padding: 19px 56px;
+    }
+}
+
+@media (min-width: 576px) {
+    nav.navbar {
+        padding: 10px 32px;
+    }
+    
+    span.text-danger {
+        max-width: 80%;
+    }
+
+    .label-group {
+        margin-bottom: 10px;
+    }
+}
+
+/* LIGHT-THEME */
+body.theme-light {
+    background: #f9f9f9;
+    color: $dark-1;
+
+    a, .hint {
+        color: #000;
+    }
+
+    .btn {
+        background-color: $coral;
+
+        &:hover {
+            background-color: hover($coral);
+        }
+    }
+
+    .input-group-text {
+        background: $light-5;
+        border-color: $light-5;
+    }
+
+
+    .form-control {
+        background: #f9f9f9;
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+
+        &:focus {
+            border: 1px solid rgba(0, 0, 0, 0.6) !important;
+            box-shadow: inset 2px 2px 10px rgba(5, 6, 10, 0.3);
+        }
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        background: #f9f9f9;
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+        &.navbar {
+            background: #fff;
+            color: #000;
+        }
+
+        .nav-link {
+            font-weight: 900;
+            color: #fff !important;
+            background-color: $coral;
+            border-radius: 30px;
+            text-transform: uppercase;
+            padding: 5px 15px;
+
+            &:hover {
+                background-color: hover($coral);
+            }
+
+            &.active {
+                background-color: #E0E0E0;
+                color: #000 !important;
+
+                &:hover {
+                    background-color: hover(#E0E0E0);
+                }
+            }
+        }
+    }
+
+    .navbar-collapse {
+        background: #fff;
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        background-color: $light-5;
+        color: #000;
+    }
+
+    .auth-separator {
+        color: #000;
+    }
+}
+
+/* MOBILE */
+.mobile {
+    .navbar-brand, .navbar-nav.flex-grow-1, .navbar-toggler {
+        display: none;
+    }
+
+    .navbar-nav.login-nav {
+        flex: 1;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    .navbar-collapse {
+        display: flex !important;
+    }
+
+    .register-form, .login-form {
+        margin-bottom: 300px;
+    }
+}

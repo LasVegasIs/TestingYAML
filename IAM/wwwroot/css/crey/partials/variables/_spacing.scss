@@ -1,0 +1,58 @@
+$space-default: 16px;
+
+$space-xxs: $space-default * 1/8;
+$space-xs: $space-default * 1/4;
+$space-s: $space-default * 1/2;
+$space-m: $space-default;
+$space-l: $space-default * 1.5;
+$space-xl: $space-default * 2;
+$space-xxl: $space-default * 4;
+$space-xxxl: $space-default * 8;
+
+// Aliases
+$s-xxs: $space-xxs;
+$s-xs: $space-xs;
+$s-s: $space-s;
+$s-m: $space-m;
+$s-l: $space-l;
+$s-xl: $space-xl;
+$s-xxl: $space-xxl;
+$s-xxxl: $space-xxxl;
+
+// Insets
+$space-inset-default: 16px 16px 16px 16px;
+$space-inset-xs: 4px 4px 4px 4px;
+$space-inset-s: 8px 8px 8px 8px;
+$space-inset-m: 16px 16px 16px 16px;
+$space-inset-l: 24px 24px 24px 24px;
+$space-inset-xl: 32px 32px 32px 32px;
+$space-inset-xxl: 64px 64px 64px 64px;
+$space-inset-xxxl: 128px 128px 128px 128px;
+
+// Squished insets
+$space-inset-squish-xs: 2px 4px 2px 4px;
+$space-inset-squish-s: 4px 8px 4px 8px;
+$space-inset-squish-m: 8px 16px 8px 16px;
+$space-inset-squish-xl: 16px 32px 16px 32px;
+$space-inset-squish-xxl: 32px 64px 32px 64px;
+$space-inset-squish-xxxl: 64px 128px 64px 128px;
+
+// Stack
+$space-stack-default: 0 0 16px 0;
+$space-stack-xs: 0 0 4px 0;
+$space-stack-s: 0 0 8px 0;
+$space-stack-m: 0 0 16px 0;
+$space-stack-l: 0 0 24px 0;
+$space-stack-xl: 0 0 32px 0;
+$space-stack-xxl: 0 0 64px 0;
+$space-stack-xxxl: 0 0 128px 0;
+
+// Inline
+$space-inline-default: 0 16px 0 0;
+$space-inline-xs: 0 4px 0 0;
+$space-inline-s: 0 8px 0 0;
+$space-inline-m: 0 16px 0 0;
+$space-inline-l: 0 24px 0 0;
+$space-inline-xl: 0 32px 0 0;
+$space-inline-xxl: 0 64px 0 0;
+$space-inline-xxxl: 0 128px 0 0;

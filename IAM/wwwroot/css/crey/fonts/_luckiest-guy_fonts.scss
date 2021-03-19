@@ -1,0 +1,10 @@
+/**
+ * Include Luckiest Guy font
+ */
+
+@font-face {
+    font-family: "Luckiest Guy";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Luckiest Guy Regular"), local("Luckiest-Guy-Regular"), url("/fonts/LuckiestGuy-Regular.woff") format("woff");
+}

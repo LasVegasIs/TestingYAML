@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-IAM-C2C8AC45-0514-4B95-9CAC-44EA69BBE489</UserSecretsId>
+     <!-- remove this (and old table api nugets) as migration ends -->
+    <DefineConstants>COSMOS_SDK_FOR_TABLE_STORAGE;</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Mandrill" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core\Core-3.1.csproj" />
+    <ProjectReference Include="..\Core\Moderation\Moderation.csproj" />
+    <ProjectReference Include="..\MessageContracts\AccountMessageContracts\AccountMessageContracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.logging.iam.dev.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.logging.iam.staging.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\FeatureGates\Controllers\" />
+    <Folder Include="Contracts\" />
+  </ItemGroup>
+
+  <PropertyGroup>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+</Project>

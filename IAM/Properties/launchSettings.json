@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "IAM": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "https://iam-local.playcrey.com:5018",
+      "environmentVariables": {
+        "DeploymentSlot": "dev",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://iam-local.playcrey.com:5018"
+    }
+  }
+}

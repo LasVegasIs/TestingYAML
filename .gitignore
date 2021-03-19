@@ -1,0 +1,9 @@
+*.pfx
+**/*.user
+**/.cache
+**/__pycache__
+**/node_modules
+**/bin
+**/obj
+.vs
+packages

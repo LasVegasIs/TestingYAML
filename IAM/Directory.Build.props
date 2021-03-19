@@ -1,0 +1,8 @@
+﻿<Project>
+  <!--the way to share dependencies; needed for some reason for local publishing to dev-->
+  <ItemGroup>
+    <PackageReference Include="AsyncFixer" Version="1.3.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.0" />
+  </ItemGroup>
+</Project>

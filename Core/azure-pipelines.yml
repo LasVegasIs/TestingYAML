@@ -1,0 +1,27 @@
+trigger:
+- master
+pr:
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+  - checkout: self
+    submodules: recursive
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore NuGet packages'
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Service ($(buildConfiguration))'
+    inputs:
+      command: build
+      projects: 'Core-3.1.sln'
+      arguments: '--configuration $(buildConfiguration)'

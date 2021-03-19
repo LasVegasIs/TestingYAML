@@ -1,0 +1,12 @@
+﻿@page
+@model TermsModel
+@{
+    ViewData["Title"] = "Terms and conditions" ;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    @Html.Raw(Model.TermsAndConditions)
+</div>
+

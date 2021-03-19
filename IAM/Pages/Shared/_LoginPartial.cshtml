@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using System.Web;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    string isActive(string page)
+    {
+        return ViewContext.RouteData.Values["page"].ToString().Contains(page, StringComparison.CurrentCultureIgnoreCase) ? "active" : "";
+    }
+
+    string returnUrl = ViewContext.HttpContext.Request.Query["returnUrl"];
+    string mobileMode = ViewContext.HttpContext.Request.Query["mobile"];
+    string registrationPageReturnUrl = ViewContext.HttpContext.Request.Query["registrationPageReturnUrl"];
+}
+
+    <ul class="navbar-nav login-nav">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var applicationUser = await UserManager.GetUserAsync(User);
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account settings</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" asp-route-mobile ="@mobileMode" method="post">
+                    <button type="submit" class="nav-link">Logout</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link @{isActive("Register");} " asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@returnUrl" asp-route-registrationPageReturnUrl="@registrationPageReturnUrl" asp-route-mobile ="@mobileMode">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @{isActive("Login");} " asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@returnUrl" asp-route-mobile ="@mobileMode">Sign in</a>
+            </li>
+        }
+    </ul>

@@ -1,0 +1,23 @@
+$font-family: "Roboto", Arial, Helvetica, sans-serif;
+$font-family-barlow: "Barlow Condensed", sans-serif; //TODO Find font alternatives
+$font-family-noto: "Noto Sans", sans-serif;
+$font-family-luckiest-guy: "Luckiest Guy", "Roboto", Arial, Helvetica, sans-serif;
+
+$font-size-default: 16px;
+
+$font-size-s: (0.75 * $font-size-default);
+$font-size-m: (1 * $font-size-default);
+$font-size-l: (1.5 * $font-size-default);
+$font-size-xl: (2 * $font-size-default);
+$font-size-xxl: (4 * $font-size-default);
+
+$h6-size: (1.3125 * $font-size-default);
+$h5-size: (1.5625 * $font-size-default);
+$h4-size: (2.25 * $font-size-default);
+$h3-size: (3.125 * $font-size-default);
+$h2-size: (3.9375 * $font-size-default);
+$h1-size: (6.3125 * $font-size-default);
+
+// TODO Delete this and all Font Awesome files
+// FONT AWESOME
+//$fa-font-path: "../../../../fonts/";

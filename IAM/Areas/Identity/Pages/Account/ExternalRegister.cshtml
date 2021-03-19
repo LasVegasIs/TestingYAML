@@ -1,0 +1,86 @@
+﻿@page
+@model ExternalRegisterModel
+@{
+    ViewData["Title"] = "Sign up";
+    ViewData["Description"] = "We are going to need a few details, but here’s what we’ll give in return:";
+}
+
+@using IAM.Areas.Authentication;
+
+<h1>@ViewData["Title"]</h1>
+<div class="description">@ViewData["Description"]</div>
+<ul class="description-list">
+    <li>Free to play games released every week</li>
+    <li>A code-free way to create games</li>
+</ul>
+<h4>Associate your @Model.LoginProvider account.</h4>
+<hr />
+
+<p>
+    You've successfully authenticated with <strong>@Model.LoginProvider</strong> with the email address: <strong>@Model.Email</strong>.
+    Please enter a username for this site below and click the Register button to finish logging in.
+</p>
+
+<div class="row">
+    <div class="col-12">
+        <form asp-route-creyTicket="@Model.CreyTicket" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="register-form ml-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.UserName"></label>
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <input asp-for="Input.UserName" class="form-control" value="@Model.Input.UserName"/>
+                <label class="hint">4-32 chars. Only latin characters, numeric values and -_'. without space</label>
+            </div>
+            <div class="form-group withhint">
+                <div class="label-group">
+                    <label>Birthday</label>
+                    @if (!string.IsNullOrEmpty(Model.BirthDateErrorMessage))
+                    {
+                        <span class="text-danger">@Model.BirthDateErrorMessage</span>
+                    }
+                </div>
+                <div class="input-with-icon">
+                    <span class="select-container row no-gutters">
+                        <span class="col-4">
+                            <input asp-for="Input.Day" placeholder="Day" class="form-control" autocomplete="off" min="1" max="31" required />
+                            <span asp-validation-for="Input.Day" class="text-danger"></span>
+                        </span>
+                        <span class="col-4">
+                            <input asp-for="Input.Month" placeholder="Month" class="form-control" autocomplete="off" min="1" max="12" required />
+                            <span asp-validation-for="Input.Month" class="text-danger"></span>
+                        </span>
+                        <span class="col-4">
+                            <input asp-for="Input.Year" placeholder="Year" class="form-control" autocomplete="off" min="@DateOfBirth.MinYearOfBirth" max="@DateTime.UtcNow.Year" required />
+                            <span asp-validation-for="Input.Year" class="text-danger"></span>
+                        </span>
+                    </span>
+                    <label class="hint">&nbsp;</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input asp-for="Input.NewsletterSubscribed" type="checkbox" class="newsletter-check" id="newsletter" />
+                <label class="form-check-label">
+                    Keep me up to date, subscribe me to the newsletter
+                </label>
+            </div>
+            <div class="form-group">
+                <input asp-for="Input.AreTermsAccepted" type="checkbox" class="eula-check" id="eula" />
+                <label class="form-check-label">
+                    I accept
+                    <a asp-page="/Terms" asp-route-returnUrl="@Model.ReturnUrl">Terms</a>
+                    and
+                    <a asp-page="/Privacy" asp-route-returnUrl="@Model.ReturnUrl">Privacy Policy</a>
+                </label>
+                <div>
+                    <span asp-validation-for="Input.AreTermsAccepted" class="text-danger eula"></span>
+                </div>
+            </div>
+            <input asp-for="Input.AvatarId" type="hidden" value="@Model.Input.AvatarId" />
+            <button type="submit" class="btn btn-primary my-3">Sign up for free</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

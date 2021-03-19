@@ -1,0 +1,181 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Sign up";
+    ViewData["Description"] = "We are going to need a few details, but here’s what we’ll give in return:";
+}
+@using IAM.Areas.Authentication;
+@{
+    var classVar = (!string.IsNullOrEmpty(Model.CreyTicket)) ? "col-md-5" : "";
+    bool isMobileModeOn = Model.MobileMode == "true";
+}
+
+<div class="row">
+    <div class="col-12 @classVar">
+        <div class="register-form">
+            <h1>@ViewData["Title"]</h1>
+            <div class="description">@ViewData["Description"]</div>
+            <ul class="description-list">
+                <li>Free to play games released every week</li>
+                <li>A code-free way to create games</li>
+            </ul>
+            @if (!isMobileModeOn)
+            {
+                <section>
+                    <div class="label">Sign in with</div>
+                    @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            Social logins are unavailable at this moment
+                        </div>
+                    }
+                    else
+                    {
+                        <form id="external-account" asp-page="./ExternalLogin"
+                                asp-route-creyTicket="@Model.CreyTicket"
+                                asp-route-returnUrl="@Model.ReturnUrl"
+                                asp-route-username="@Model.Input.UserName"
+                                method="post" class="form-horizontal">
+                            <div class="row">
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-@provider.Name.ToLower()" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    </div>
+                                }
+                            </div>
+                        </form>
+                    }
+                </section>
+                <div class="auth-separator">or</div>
+            }
+            <form asp-route-creyTicket="@Model.CreyTicket" asp-route-returnUrl="@Model.ReturnUrl" asp-route-registrationPageReturnUrl="@Model.RegistrationPageReturnUrl" asp-route-mobile="@Model.MobileMode" method="post" onsubmit="return formOnSubmit();" id="register-form" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.UserName"></label>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                    <input asp-for="Input.UserName" class="form-control" value="@Model.Input.UserName" />
+                    <label class="hint">4-32 chars. Only latin characters, numeric values and -_'. without space</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <label class="hint">Enter your valid email address</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="pwd-icon"><i id="icon-pwd" class="fa fa-eye"></i></span>
+                        </div>
+                        <input asp-for="Input.Password" class="form-control active" id="pwd" />
+                    </div>
+                    <label class="hint">Minimum 6 characters</label>
+                </div>
+                <div class="form-group withhint">
+                    <div class="label-group">
+                        <label>Birthday</label>
+                        @if (!string.IsNullOrEmpty(Model.BirthDateErrorMessage))
+                        {
+                            <span class="text-danger">@Model.BirthDateErrorMessage</span>
+                        }
+                    </div>
+                    <div class="input-with-icon">
+                        <span class="select-container row no-gutters">
+                            <span class="col-4">
+                                <input asp-for="Input.Day" placeholder="Day" class="form-control" autocomplete="off" min="1" max="31" required />
+                                <span asp-validation-for="Input.Day" class="text-danger"></span>
+                            </span>
+                            <span class="col-4">
+                                <input asp-for="Input.Month" placeholder="Month" class="form-control" autocomplete="off" min="1" max="12" required />
+                                <span asp-validation-for="Input.Month" class="text-danger"></span>
+                            </span>
+                            <span class="col-4">
+                                <input asp-for="Input.Year" placeholder="Year" class="form-control" autocomplete="off" min="@DateOfBirth.MinYearOfBirth" max="@DateTime.UtcNow.Year" required />
+                                <span asp-validation-for="Input.Year" class="text-danger"></span>
+                            </span>
+                        </span>
+                        <label class="hint">&nbsp;</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Input.NewsletterSubscribed" type="checkbox" class="newsletter-check" id="newsletter" />
+                    <label class="form-check-label">
+                        Keep me up to date, subscribe me to the newsletter
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Input.AreTermsAccepted" type="checkbox" class="eula-check" id="eula" />
+                    <label class="form-check-label">
+                        I accept
+                        <a asp-page="/Terms" asp-route-returnUrl="@Model.ReturnUrl" asp-route-mobile="@Model.MobileMode">Terms</a>
+                        and
+                        <a asp-page="/Privacy" asp-route-returnUrl="@Model.ReturnUrl" asp-route-mobile="@Model.MobileMode">Privacy Policy</a>
+                    </label>
+                    <div>
+                        <span asp-validation-for="Input.AreTermsAccepted" class="text-danger eula"></span>
+                    </div>
+                </div>
+                <button class="g-recaptcha btn my-3" data-sitekey="@Model.ReCaptchaClientKey" data-callback="recaptcha_callback">Sign up for free</button>
+                <div class="text-center">
+                    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Model.ReturnUrl" asp-route-mobile="@Model.MobileMode">Already have an account? Sign in here!</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.CreyTicket))
+    {
+        <div class="col-md-1 d-none d-md-block"></div>
+        <div class="col-12 col-md-6">
+            <div class="referral-container">
+                <h4>Your friend invited you to CREY! That's awesome.</h4>
+                <h5>To collect your 250 <span class="xp-icon">XP</span>:</h5>
+                <ol>
+                    <li>sign up</li>
+                    <li>play a game</li>
+                </ol>
+                <p>... and that's it! Welcome to CREY! </p>
+            </div>
+        </div>
+    }
+
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+        var captchaChecked = false;
+        function recaptcha_callback() {
+            captchaChecked = true;
+            document.getElementById("register-form").submit();
+        }
+
+        function formOnSubmit() {
+            console.log('formOnSubmit', captchaChecked);
+            if (captchaChecked) {
+                document.getElementById("pwd").readOnly = true;
+                document.getElementById("eula").readOnly = true;
+            }
+            return captchaChecked;
+        }
+
+        document.getElementById('pwd-icon').onclick = function (event) {
+            var inputPass = document.getElementById("pwd");
+            var icon = document.getElementById("icon-pwd");
+            if (inputPass.classList.contains('active')) {
+                inputPass.setAttribute('type', 'text');
+                inputPass.classList.remove('active');
+                icon.className = 'fa fa-eye-slash';
+            } else {
+                inputPass.setAttribute('type', 'password');
+                inputPass.classList.add('active');
+                icon.className = 'fa fa-eye';
+            }
+        };
+    </script>
+}

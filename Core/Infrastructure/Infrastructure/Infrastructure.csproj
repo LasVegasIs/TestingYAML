@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <RootNamespace>Crey.Infrastructure</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+<ItemGroup>
+    <PackageReference Include="MimeMapping" Version="1.0.1.35" />
+    
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    
+    <PackageReference Include="prometheus-net.AspNetCore" Version="4.1.1" />
+
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.1.0" />
+
+    <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
+  </ItemGroup>
+
+<ItemGroup>
+  <ProjectReference Include="..\..\Instrumentation\Instrumentation\Instrumentation.csproj" />
+  <ProjectReference Include="..\..\Authentication\Authentication.csproj" />
+</ItemGroup>
+
+</Project>

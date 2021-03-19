@@ -1,0 +1,45 @@
+$sizes: (
+    "xxs": $space-xxs,
+    "xs": $space-xs,
+    "s": $space-s,
+    "m": $space-m,
+    "l": $space-l,
+    "xl": $space-xl,
+    "xxl": $space-xxl,
+    "xxxl": $space-xxxl,
+);
+
+// PADDING - INSET
+@each $size, $i in $sizes {
+    .p-#{$size} {
+        padding: $i;
+    }
+}
+
+// PADDING - INSET SQUISHED
+@each $size, $i in $sizes {
+    .p-sq-#{$size} {
+        padding: $i ($i * 2);
+    }
+}
+
+// PADDING - INSET STRETCHED
+@each $size, $i in $sizes {
+    .p-st-#{$size} {
+        padding: ($i * 2) $i;
+    }
+}
+
+// MARGIN BOTTOM - STACK SPACING
+@each $size, $i in $sizes {
+    .mb-#{$size} {
+        margin: 0 0 $i 0;
+    }
+}
+
+// MARGIN RIGHT - INLINE SPACING
+@each $size, $i in $sizes {
+    .mr-#{$size} {
+        margin: 0 $i 0 0;
+    }
+}

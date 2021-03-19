@@ -1,0 +1,16 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@using Microsoft.Extensions.Configuration;
+@using Crey.Configuration.ConfigurationExtensions;
+@inject IConfiguration configuration_;
+@{
+    var url = "https://" + configuration_.GetDeploymentSlot().ToString().ToLower() + ".playcrey.com/my";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-4">Welcome to CREY</h1>
+    <a href="@url" class="btn btn-coral">Go to Playcrey.com</a>
+</div>
